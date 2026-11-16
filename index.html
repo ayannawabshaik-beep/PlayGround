@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#101524" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23d8e875'/%3E%3Ctext x='20' y='28' text-anchor='middle' font-size='27' fill='%23131a2a'%3E%E2%99%AB%3C/text%3E%3C/svg%3E" />
+  <title>BEATBOUND — Monster Rhythm Arena</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="game-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Beatbound home"><span class="brand-mark">♫</span><span>BEATBOUND</span></a>
+      <div class="top-meta"><span class="live-dot"></span><span>NEON WILDS · ARENA 01</span></div>
+      <button class="sound-toggle" id="soundToggle" aria-label="Toggle sound" title="Toggle sound"><span id="soundIcon">♫</span><span id="soundLabel">SOUND ON</span></button>
+    </header>
+
+    <section class="battle-card" aria-label="Monster rhythm battle">
+      <div class="arena-header">
+        <div class="round-label"><span class="round-kicker">WILD ENCOUNTER</span><strong id="roundName">THE GROVE GUARDIAN</strong></div>
+        <div class="battle-status"><span class="status-pip"></span><span id="statusText">READY TO JAM?</span></div>
+        <div class="round-count">DUEL <span id="duelNumber">01</span><span class="round-slash"> / </span>03</div>
+      </div>
+
+      <div class="creature-stage">
+        <div class="stage-sun"></div><div class="stage-grid"></div>
+        <div class="creature-side enemy-side">
+          <div class="creature-meta"><span class="type-chip enemy-type" id="enemyType">MOSS / BEAST</span><span class="level">LV. 08</span></div>
+          <div class="creature-name-row"><h2 id="enemyName">MOSSQUATCH</h2><span class="mood" id="enemyMood">♪</span></div>
+          <div class="health-track"><div class="health-fill enemy-health" id="enemyHealth"></div></div>
+          <div class="hp-caption"><span>VITALITY</span><span id="enemyHpText">100 / 100</span></div>
+        </div>
+        <div class="enemy-art" id="enemyArt" aria-label="Mossquatch monster" role="img">
+          <svg viewBox="0 0 260 220" class="monster-svg" aria-hidden="true">
+            <ellipse cx="130" cy="195" rx="77" ry="13" fill="#071315" opacity=".28"/>
+            <path d="M63 101 47 62 83 73 97 40 122 67 152 39 166 75 205 57 190 104" fill="#4aa483" stroke="#183e3c" stroke-width="7" stroke-linejoin="round"/>
+            <path d="M63 105Q58 75 89 73Q102 46 128 67Q153 43 171 76Q205 75 198 112L188 159Q178 182 131 181Q83 181 70 157Z" fill="#79c9a0" stroke="#183e3c" stroke-width="7"/>
+            <path d="M75 132Q101 123 126 134Q157 120 186 132L179 160Q157 174 129 169Q98 174 79 158Z" fill="#b2df9d"/>
+            <path d="M83 91 103 83 111 99 104 108 88 104Z" fill="#fff4cf"/><path d="M150 98 159 82 179 89 177 103 160 108Z" fill="#fff4cf"/>
+            <circle cx="101" cy="97" r="5" fill="#183e3c"/><circle cx="163" cy="96" r="5" fill="#183e3c"/>
+            <path d="M116 132Q130 141 145 131" fill="none" stroke="#28534b" stroke-width="5" stroke-linecap="round"/>
+            <path d="M53 119Q34 126 40 151Q44 168 67 165L79 149M193 148Q215 155 219 137Q222 119 204 117" fill="#64b78d" stroke="#183e3c" stroke-width="7" stroke-linecap="round"/>
+            <path d="M95 177 87 198M160 177 170 198" stroke="#183e3c" stroke-width="12" stroke-linecap="round"/>
+            <path d="M82 61Q94 47 108 56M156 57Q172 47 184 61" fill="none" stroke="#d7f0a2" stroke-width="7" stroke-linecap="round"/>
+            <path d="M121 71Q130 56 139 71" fill="#f2cb72"/>
+          </svg>
+          <span class="art-spark spark-one">✦</span><span class="art-spark spark-two">✧</span>
+        </div>
+
+        <div class="player-art" id="playerArt" aria-label="Cinderfox monster" role="img">
+          <svg viewBox="0 0 250 210" class="monster-svg" aria-hidden="true">
+            <ellipse cx="124" cy="188" rx="72" ry="12" fill="#071315" opacity=".25"/>
+            <path d="M61 114Q37 90 43 53Q77 66 91 91Q106 69 138 77Q168 83 176 108L207 88Q213 124 185 144Q171 170 126 170Q78 169 61 141Z" fill="#f58a5c" stroke="#573538" stroke-width="7" stroke-linejoin="round"/>
+            <path d="M65 109 72 49 103 80M131 79 155 42 167 99" fill="#e86255" stroke="#573538" stroke-width="7" stroke-linejoin="round"/>
+            <path d="m75 63 17 20-20 1ZM150 60l-10 21 20-3Z" fill="#ffe3a0"/>
+            <path d="M69 125Q98 113 128 126Q155 115 178 125Q165 160 125 159Q85 159 69 125Z" fill="#ffd08b"/>
+            <path d="M82 103 101 100 108 112 100 119 85 115ZM142 111 150 98 168 103 167 116 151 120Z" fill="#fff5d8"/>
+            <circle cx="99" cy="108" r="4.7" fill="#44383b"/><circle cx="155" cy="108" r="4.7" fill="#44383b"/>
+            <path d="M114 131Q125 137 136 130" fill="none" stroke="#9b514b" stroke-width="4" stroke-linecap="round"/>
+            <path d="M177 137Q205 145 209 120Q238 128 225 154Q211 175 178 158" fill="#f08b5b" stroke="#573538" stroke-width="7"/>
+            <path d="M204 126Q222 112 229 99Q231 120 218 131" fill="#ffd16f"/><path d="M217 125Q235 119 240 107Q240 127 225 137" fill="#fb7652"/>
+            <path d="M91 166 84 187M154 166 162 187" stroke="#573538" stroke-width="11" stroke-linecap="round"/>
+            <path d="M46 59Q36 39 51 24Q52 45 64 53" fill="#f8b05f"/><path d="M159 45Q155 24 174 17Q166 37 170 50" fill="#ffd16f"/>
+          </svg>
+          <span class="player-spark">✦</span>
+        </div>
+        <div class="creature-side player-side">
+          <div class="creature-meta"><span class="type-chip player-type">EMBER / FOX</span><span class="level">LV. 09</span></div>
+          <div class="creature-name-row"><h2>CINDERFOX</h2><span class="mood player-mood">♫</span></div>
+          <div class="health-track"><div class="health-fill player-health" id="playerHealth"></div></div>
+          <div class="hp-caption"><span>VITALITY</span><span id="playerHpText">100 / 100</span></div>
+        </div>
+        <div class="stage-message" id="stageMessage" aria-live="polite"></div>
+      </div>
+
+      <div class="rhythm-panel" id="rhythmPanel">
+        <div class="rhythm-info">
+          <div><span class="tiny-label">YOUR TURN</span><h3 id="songTitle">CANOPY GROOVE</h3></div>
+          <div class="tempo"><span class="tempo-value" id="tempoValue">108</span><span class="tempo-unit">BPM</span><span class="tempo-divider"></span><span class="measure" id="measureText">01 <i>/</i> 03</span></div>
+        </div>
+        <div class="rhythm-main">
+          <div class="lane-wrap">
+            <div class="lane-guide"><span>FRET THE BEAT</span><span id="comboReadout">COMBO × 0</span></div>
+            <canvas id="laneCanvas" aria-label="Rhythm note lanes"></canvas>
+            <div class="lane-keys" aria-label="Touch rhythm controls">
+              <button class="lane-key key-a" data-lane="0" aria-label="Hit green lane, A key">A</button>
+              <button class="lane-key key-s" data-lane="1" aria-label="Hit red lane, S key">S</button>
+              <button class="lane-key key-d" data-lane="2" aria-label="Hit yellow lane, D key">D</button>
+              <button class="lane-key key-f" data-lane="3" aria-label="Hit blue lane, F key">F</button>
+            </div>
+          </div>
+          <aside class="scoreboard">
+            <div class="score-block"><span class="tiny-label">RHYTHM SCORE</span><strong id="scoreValue">000000</strong></div>
+            <div class="rating-block"><span class="tiny-label">LAST HIT</span><strong id="judgement">—</strong></div>
+            <div class="hit-stats"><span><i class="stat-dot perfect-dot"></i> PERFECT <b id="perfectCount">0</b></span><span><i class="stat-dot good-dot"></i> GOOD <b id="goodCount">0</b></span><span><i class="stat-dot miss-dot"></i> MISS <b id="missCount">0</b></span></div>
+          </aside>
+        </div>
+        <div class="battle-footer"><span><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><kbd>F</kbd> HIT THE BEAT <span class="footer-dot">·</span> <b>SPACE</b> START / CONTINUE</span><span class="timing-legend"><i class="legend-perfect"></i> ±70MS PERFECT <i class="legend-good"></i> ±145MS GOOD</span></div>
+      </div>
+
+      <div class="intro-overlay" id="introOverlay">
+        <div class="intro-card">
+          <div class="intro-icon">♫</div><span class="intro-eyebrow">A RHYTHM BATTLE ADVENTURE</span>
+          <h1>THE WILD<br><em>BEAT</em> CALLS.</h1>
+          <p>Wild creatures challenge you to a duel. Feel the rhythm, hit the notes, and let your combo do the talking.</p>
+          <div class="intro-controls"><span><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><kbd>F</kbd> or tap lanes</span><span>3 duels · one big encore</span></div>
+          <button class="primary-button" id="startButton">ENTER THE ARENA <span>↗</span></button>
+          <div class="intro-foot">HEADPHONES OPTIONAL <span>✦</span> RHYTHM ESSENTIAL</div>
+        </div>
+      </div>
+      <div class="result-overlay hidden" id="resultOverlay">
+        <div class="result-card"><span class="result-eyebrow" id="resultEyebrow">DUEL CLEAR</span><h2 id="resultTitle">THAT WAS<br><em>WILD.</em></h2><p id="resultCopy">Your rhythm shook the canopy.</p><div class="result-score"><span>FINAL RHYTHM SCORE</span><strong id="finalScore">000000</strong></div><button class="primary-button" id="continueButton">NEXT DUEL <span>↗</span></button><button class="text-button" id="replayButton">PLAY AGAIN</button></div>
+      </div>
+    </section>
+    <footer class="page-footer"><span>BEATBOUND <b>·</b> THE GROVE CIRCUIT</span><span>KEEP YOUR EARS OPEN <b>✦</b></span></footer>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
