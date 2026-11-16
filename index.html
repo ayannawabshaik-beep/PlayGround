@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><meta name="theme-color" content="#101d22">
+<title>Wilds of Aether — Open World Adventure</title>
+<style>
+:root{color-scheme:dark;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#a5c9c0}canvas{display:block}#game{position:fixed;inset:0}#hud{position:fixed;inset:0;pointer-events:none;color:#f4f3df}.topbar{position:absolute;top:24px;left:28px;display:flex;align-items:center;gap:14px}.brand{font-size:11px;letter-spacing:.23em;text-transform:uppercase;font-weight:800;color:#d5e7cc}.brand strong{display:block;font-size:19px;letter-spacing:.12em;color:white;margin-top:3px}.crest{width:44px;height:44px;border:1px solid #dce5bb88;border-radius:50%;display:grid;place-items:center;background:#142b2788;color:#f8eab3;font-size:21px;box-shadow:0 6px 24px #10252144}.quest{position:absolute;top:24px;left:50%;transform:translateX(-50%);width:min(310px,40vw);padding:14px 18px 13px;border:1px solid #eef0d044;background:#152b29a8;backdrop-filter:blur(12px);border-radius:14px;box-shadow:0 12px 30px #152b2940}.quest-label{font-size:9px;letter-spacing:.2em;color:#bed3ad;text-transform:uppercase;font-weight:800}.quest-title{font-size:15px;font-weight:700;margin:5px 0 11px}.progress-row{display:flex;align-items:center;gap:10px;font-size:11px;color:#d1d9bf}.progress{height:5px;background:#f4f4d322;border-radius:10px;overflow:hidden;flex:1}.progress i{height:100%;display:block;width:0;background:#f3cd78;border-radius:10px;transition:width .3s}.right-tools{position:absolute;top:24px;right:26px;display:flex;align-items:flex-start;gap:12px}.weather{background:#152b29a8;border:1px solid #eef0d033;backdrop-filter:blur(12px);border-radius:12px;padding:11px 15px;font-size:11px;color:#d4dfcb;letter-spacing:.05em}.weather b{color:#fff;font-size:13px;margin-right:6px}.map{width:140px;height:140px;border-radius:50%;border:2px solid #e8edce9c;background:#142b298e;box-shadow:0 7px 25px #142b2950;position:relative;overflow:hidden}.map canvas{width:100%;height:100%}.map-label{position:absolute;top:154px;right:4px;font-size:9px;letter-spacing:.16em;color:#e3e5d5;text-transform:uppercase}.bottom-left{position:absolute;bottom:25px;left:28px;display:flex;align-items:flex-end;gap:14px}.stamina{width:190px;background:#172b2799;border:1px solid #eff0d244;border-radius:12px;padding:10px 12px}.stamina-title{font-size:9px;letter-spacing:.16em;color:#c5d5b9;text-transform:uppercase;margin-bottom:8px}.stamina-bar{height:4px;background:#ffffff25;border-radius:5px}.stamina-bar i{display:block;height:100%;width:100%;border-radius:5px;background:#9bd29c}.hint{font-size:10px;line-height:1.6;color:#edf0d6;background:#172b2785;padding:8px 11px;border-radius:9px}.bottom-right{position:absolute;right:28px;bottom:25px;text-align:right;font-size:10px;color:#e8ecd9aa;line-height:1.7}.key{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border:1px solid #f1f0d477;border-radius:5px;margin-left:3px;color:#fff;background:#172b2777;font-size:9px}.toast{position:absolute;top:24%;left:50%;transform:translate(-50%,-10px);opacity:0;transition:.35s;white-space:nowrap;background:#162b27dd;border:1px solid #f4d28a88;color:#ffe9b5;padding:11px 18px;border-radius:30px;font-size:12px;letter-spacing:.04em}.toast.show{opacity:1;transform:translate(-50%,0)}.center-mark{position:absolute;left:50%;top:50%;width:5px;height:5px;border:1px solid #f4f1d599;border-radius:50%;opacity:.48;transform:translate(-50%,-50%)}.intro{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(180deg,#0e242480,#102924b8);backdrop-filter:blur(5px);pointer-events:auto;transition:opacity .6s}.intro.hidden{opacity:0;pointer-events:none}.intro-card{width:min(540px,90vw);text-align:center;padding:35px 36px 32px;border:1px solid #e6e9cb44;border-radius:23px;background:#152a27d9;box-shadow:0 25px 90px #07161377}.eyebrow{font-size:10px;letter-spacing:.29em;color:#dfc788;text-transform:uppercase;font-weight:800}.intro h1{font-size:clamp(34px,6vw,57px);line-height:.98;letter-spacing:-.055em;margin:15px 0 13px;color:#f6f1dc}.intro p{max-width:380px;margin:0 auto 24px;color:#c3d0bb;font-size:14px;line-height:1.7}.start{border:0;border-radius:9px;padding:13px 27px;background:#e6c47b;color:#26382d;font-weight:850;font-size:11px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;box-shadow:0 6px 25px #e6c47b38}.start:hover{background:#f2d89b;transform:translateY(-1px)}.intro-foot{font-size:10px;color:#aabca9;margin-top:16px;letter-spacing:.04em}.touch-controls{display:none;pointer-events:none}.joystick{position:absolute;left:22px;bottom:28px;width:116px;height:116px;border-radius:50%;border:1px solid #e7ebd466;background:#11272255;pointer-events:auto;touch-action:none}.stick{position:absolute;left:50%;top:50%;width:46px;height:46px;transform:translate(-50%,-50%);border-radius:50%;background:#e8eccb99;border:1px solid #fff9}.jump{pointer-events:auto;position:absolute;right:24px;bottom:37px;width:68px;height:68px;border-radius:50%;border:1px solid #e7ebd477;background:#17302caa;color:white;font-size:10px;font-weight:800;letter-spacing:.1em;touch-action:none}.interact{display:none;position:absolute;left:50%;bottom:18%;transform:translateX(-50%);border:1px solid #e7c984aa;background:#172b27dd;color:#f5e5bb;border-radius:22px;padding:11px 17px;font-size:11px;pointer-events:auto;touch-action:manipulation}.interact.show{display:block}@media(max-width:700px){.topbar{top:12px;left:12px;gap:8px}.crest{width:34px;height:34px;font-size:17px}.brand{font-size:8px}.brand strong{font-size:13px}.quest{top:12px;left:auto;right:12px;transform:none;width:195px;padding:10px 12px}.quest-title{font-size:12px;margin:4px 0 7px}.quest-label{font-size:8px}.right-tools{display:none}.bottom-left{left:12px;bottom:16px;display:block}.stamina{width:145px;padding:8px 10px}.hint{display:none}.bottom-right{display:none}.touch-controls{display:block}.intro-card{padding:30px 22px}.intro p{font-size:13px}.center-mark{display:none}}
+</style>
+</head>
+<body>
+<div id="game"></div>
+<div id="hud">
+  <div class="topbar"><div class="crest">✦</div><div class="brand">The forgotten frontier<strong>AETHERWILD</strong></div></div>
+  <div class="quest"><div class="quest-label">A trail of starlight</div><div class="quest-title" id="questTitle">Gather the lost starshards</div><div class="progress-row"><div class="progress"><i id="progressFill"></i></div><span id="progressText">0 / 5</span></div></div>
+  <div class="right-tools"><div class="weather"><b>☀</b> GOLDEN HOUR<br><span style="font-size:9px;color:#aebda9">WIND FROM THE WEST</span></div><div class="map"><canvas id="minimap" width="140" height="140"></canvas></div><div class="map-label">THE WILDS</div></div>
+  <div class="bottom-left"><div class="stamina"><div class="stamina-title">✧ &nbsp; Wayfarer</div><div class="stamina-bar"><i id="staminaFill"></i></div></div><div class="hint">WASD move <span class="key">SHIFT</span> sprint<br>Mouse look <span class="key">SPACE</span> jump</div></div>
+  <div class="bottom-right">EXPLORE THE WILDS<br>WASD MOVE <span class="key">SHIFT</span> SPRINT</div>
+  <div class="center-mark"></div><div class="toast" id="toast">A starshard hums in your palm</div>
+  <div class="touch-controls"><div class="joystick" id="joystick"><div class="stick" id="stick"></div></div><button class="jump" id="jumpButton">JUMP</button></div>
+  <button class="interact" id="interact">✦ &nbsp; Enter the Starwell</button>
+  <div class="intro" id="intro"><div class="intro-card"><div class="eyebrow">A small open-world adventure</div><h1>THE WILDS<br>ARE CALLING</h1><p>Five starshards have scattered across the valley. Wander the ancient forest, find them all, and awaken the Starwell.</p><button class="start" id="startButton">Begin your journey</button><div class="intro-foot">WASD to wander · mouse to look · shift to run · space to jump</div></div></div>
+</div>
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+
+const root = document.querySelector('#game');
+const scene = new THREE.Scene();
+scene.background = new THREE.Color('#a9cbbf');
+scene.fog = new THREE.FogExp2('#a9cbbf', 0.0037);
+const camera = new THREE.PerspectiveCamera(55, innerWidth / innerHeight, .1, 420);
+const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 1.8));
+renderer.setSize(innerWidth, innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.14;
+root.appendChild(renderer.domElement);
+
+scene.add(new THREE.HemisphereLight('#e5f4e3', '#556b48', 2.0));
+const sun = new THREE.DirectionalLight('#ffe3ae', 3.1);
+sun.position.set(-45, 80, 35);
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+sun.shadow.camera.left = -100; sun.shadow.camera.right = 100;
+sun.shadow.camera.top = 100; sun.shadow.camera.bottom = -100;
+sun.shadow.normalBias = 0.035;
+scene.add(sun);
+
+const mat = (color, roughness = .9, extra = {}) => new THREE.MeshStandardMaterial({ color, roughness, ...extra });
+const groundMat = mat('#78966b');
+const terrainHeight = (x, z) => {
+  const hills = Math.sin(x * .045 + Math.sin(z * .023)) * 1.15 + Math.cos(z * .052) * .8 + Math.sin((x + z) * .027) * .7;
+  const hillA = 5.2 * Math.exp(-((x - 57) ** 2 + (z + 32) ** 2) / 850);
+  const hillB = 4.0 * Math.exp(-((x + 62) ** 2 + (z - 45) ** 2) / 1000);
+  const clearing = -1.0 * Math.exp(-(x * x + z * z) / 1000);
+  return hills + hillA + hillB + clearing;
+};
+const size = 250, segments = 170;
+const groundGeo = new THREE.PlaneGeometry(size, size, segments, segments);
+groundGeo.rotateX(-Math.PI / 2);
+const pos = groundGeo.attributes.position;
+for (let i = 0; i < pos.count; i++) {
+  const x = pos.getX(i), z = pos.getZ(i);
+  pos.setY(i, terrainHeight(x, z));
+}
+const terrainColors = [];
+const low = new THREE.Color('#718b62'), mid = new THREE.Color('#82996b'), high = new THREE.Color('#9caa78');
+for (let i = 0; i < pos.count; i++) {
+  const h = pos.getY(i), tint = new THREE.Color();
+  tint.copy(low).lerp(mid, THREE.MathUtils.clamp((h + 3) / 8, 0, 1));
+  if (h > 4) tint.lerp(high, THREE.MathUtils.clamp((h - 4) / 5, 0, .8));
+  const fleck = Math.sin(pos.getX(i) * .19) * Math.cos(pos.getZ(i) * .17) * .035;
+  tint.offsetHSL(0, 0, fleck);
+  terrainColors.push(tint.r, tint.g, tint.b);
+}
+groundGeo.setAttribute('color', new THREE.Float32BufferAttribute(terrainColors, 3));
+groundMat.vertexColors = true;
+groundGeo.computeVertexNormals();
+const ground = new THREE.Mesh(groundGeo, groundMat);
+ground.receiveShadow = true;
+scene.add(ground);
+
+// Soft distant mountain silhouettes ring the walkable valley.
+const mountainMat = mat('#849f91');
+const farMat = mat('#9bb5a7');
+for (let i = 0; i < 38; i++) {
+  const a = i / 38 * Math.PI * 2;
+  const r = 141 + Math.sin(i * 19.3) * 7;
+  const h = 18 + (Math.sin(i * 9.7) + 1) * 9;
+  const g = new THREE.ConeGeometry(13 + (i % 3) * 3, h, 5);
+  const m = new THREE.Mesh(g, i % 2 ? mountainMat : farMat);
+  m.position.set(Math.cos(a) * r, h * .28 - 3, Math.sin(a) * r);
+  m.rotation.y = a;
+  m.scale.y = .8;
+  scene.add(m);
+}
+
+// A winding footpath connects the quiet starting glade to the old Starwell.
+const trailPoints = [new THREE.Vector3(0,0,9), new THREE.Vector3(2,0,-8), new THREE.Vector3(-3,0,-24), new THREE.Vector3(4,0,-41), new THREE.Vector3(0,0,-59), new THREE.Vector3(-2,0,-79), new THREE.Vector3(0,0,-100)];
+const trailCurve = new THREE.CatmullRomCurve3(trailPoints);
+const trailVerts = [], trailIndex = [];
+for (let i = 0; i <= 160; i++) {
+  const t = i / 160, p = trailCurve.getPoint(t), tangent = trailCurve.getTangent(t);
+  const side = new THREE.Vector3(-tangent.z, 0, tangent.x).normalize();
+  for (const w of [-1.7, 1.7]) trailVerts.push(p.x + side.x * w, terrainHeight(p.x + side.x * w, p.z + side.z * w) + .1, p.z + side.z * w);
+  if (i < 160) { const n = i * 2; trailIndex.push(n,n+1,n+2,n+1,n+3,n+2); }
+}
+const trailGeo = new THREE.BufferGeometry();
+trailGeo.setAttribute('position', new THREE.Float32BufferAttribute(trailVerts, 3)); trailGeo.setIndex(trailIndex); trailGeo.computeVertexNormals();
+const trail = new THREE.Mesh(trailGeo, new THREE.MeshStandardMaterial({ color: '#b8a77c', roughness: 1, side: THREE.DoubleSide }));
+trail.receiveShadow = true; scene.add(trail);
+
+// A whole forest in just a few draw calls: richly layered low-poly canopies.
+let seed = 87219;
+const random = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
+const shardSpots = [[-43,-36],[52,-42],[-70,43],[69,49],[7,-83]];
+const trunkGeo = new THREE.CylinderGeometry(.28,.44,1,7);
+const leafGeos = [new THREE.ConeGeometry(1.45,2.4,7), new THREE.ConeGeometry(1.18,2.15,7), new THREE.ConeGeometry(.86,1.8,7)];
+const trunkInst = new THREE.InstancedMesh(trunkGeo, mat('#70523b'), 245);
+const leafMats = [mat('#426b4c'),mat('#537a50'),mat('#628658')];
+const leafInst = leafGeos.map((geo,i) => new THREE.InstancedMesh(geo, leafMats[i],245));
+trunkInst.castShadow = true; trunkInst.receiveShadow = true;
+leafInst.forEach(m => {m.castShadow = true; m.receiveShadow = true;});
+const dummy = new THREE.Object3D();
+let treeCount = 0;
+const trailSamples = trailCurve.getPoints(90);
+for (let tries = 0; tries < 1800 && treeCount < 245; tries++) {
+  const x = (random() - .5) * 225, z = (random() - .5) * 225;
+  if (Math.hypot(x,z) < 14 || shardSpots.some(([sx,sz]) => Math.hypot(x-sx,z-sz) < 9)) continue;
+  let nearest = 999;
+  for (let k=0;k<trailSamples.length;k+=3) nearest = Math.min(nearest, Math.hypot(x-trailSamples[k].x,z-trailSamples[k].z));
+  if (nearest < 4.1) continue;
+  const y = terrainHeight(x,z), scale = .72 + random() * .75;
+  dummy.position.set(x,y+.9*scale,z); dummy.scale.set(scale,scale*1.65,scale); dummy.rotation.set(0,random()*Math.PI,0); dummy.updateMatrix(); trunkInst.setMatrixAt(treeCount,dummy.matrix);
+  for (let layer=0;layer<3;layer++) {
+    dummy.position.set(x,y+(2.0+layer*1.08)*scale,z); dummy.scale.set(scale*(1-layer*.11),scale*(1-layer*.11),scale*(1-layer*.11)); dummy.rotation.set(0,random()*Math.PI,0); dummy.updateMatrix(); leafInst[layer].setMatrixAt(treeCount,dummy.matrix);
+    const shade = .86 + random()*.25; leafInst[layer].setColorAt(treeCount,new THREE.Color().setRGB(shade,shade,shade));
+  }
+  treeCount++;
+}
+trunkInst.count = treeCount; trunkInst.instanceMatrix.needsUpdate = true; scene.add(trunkInst);
+leafInst.forEach(m => {m.count=treeCount;m.instanceMatrix.needsUpdate=true;scene.add(m);});
+
+// Ferns, sunlit field flowers, and scattered stones add detail near the trail.
+const stoneGeo = new THREE.DodecahedronGeometry(1,0);
+const stones = new THREE.InstancedMesh(stoneGeo, mat('#8b9278'), 90);
+for (let i=0;i<90;i++) {
+  const x=(random()-.5)*190,z=(random()-.5)*190;
+  dummy.position.set(x,terrainHeight(x,z)+.2,z); dummy.rotation.set(random(),random()*3,random());
+  dummy.scale.set(.25+random()*.7,.2+random()*.35,.25+random()*.55); dummy.updateMatrix(); stones.setMatrixAt(i,dummy.matrix);
+  const shade=.8+random()*.3; stones.setColorAt(i,new THREE.Color().setRGB(shade,shade,shade));
+}
+stones.castShadow=true;stones.receiveShadow=true;scene.add(stones);
+const flowerGeo = new THREE.SphereGeometry(.11,7,5);
+const flowerColors=['#e7d28f','#d4a9a0','#ede4c4','#d29a55'];
+for(let f=0;f<4;f++){
+  const blooms=new THREE.InstancedMesh(flowerGeo,mat(flowerColors[f]),44);
+  for(let i=0;i<44;i++){
+    const x=(random()-.5)*150,z=(random()-.5)*150;
+    dummy.position.set(x,terrainHeight(x,z)+.22,z);dummy.scale.set(1,1+random()*1.7,1);dummy.updateMatrix();blooms.setMatrixAt(i,dummy.matrix);
+  }
+  scene.add(blooms);
+}
+
+// The Starwell waits beyond the valley, dormant until the five shards return.
+const stoneMat=mat('#766e57'),lightStone=mat('#a89970');
+for(const side of [-1,1]){
+  const pillar=new THREE.Mesh(new THREE.CylinderGeometry(.8,1.05,9,7),stoneMat);
+  pillar.position.set(side*4.2,terrainHeight(side*4.2,-103)+4.2,-103);pillar.castShadow=true;scene.add(pillar);
+  const cap=new THREE.Mesh(new THREE.BoxGeometry(2.2,1.3,2.1),lightStone);cap.position.set(side*4.2,9,-103);cap.castShadow=true;scene.add(cap);
+}
+const lintel=new THREE.Mesh(new THREE.BoxGeometry(10.2,1.5,2.2),stoneMat);lintel.position.set(0,9.3,-103);lintel.castShadow=true;scene.add(lintel);
+const portalRing=new THREE.Mesh(new THREE.TorusGeometry(3.1,.22,12,48),new THREE.MeshStandardMaterial({color:'#80e4d7',emissive:'#45cdb7',emissiveIntensity:0,roughness:.25,metalness:.3}));
+portalRing.position.set(0,4.7,-104.05);scene.add(portalRing);
+const portalCore=new THREE.Mesh(new THREE.CircleGeometry(2.88,40),new THREE.MeshBasicMaterial({color:'#55cbb8',transparent:true,opacity:.08,side:THREE.DoubleSide,depthWrite:false}));
+portalCore.position.set(0,4.7,-104.1);scene.add(portalCore);
+for(let i=0;i<8;i++){
+  const rune=new THREE.Mesh(new THREE.BoxGeometry(.24,.48,.12),new THREE.MeshBasicMaterial({color:'#eccd86'}));
+  rune.position.set(Math.sin(i*Math.PI/4)*4.2,1.1,-103+Math.cos(i*Math.PI/4)*1.3);rune.rotation.z=-Math.sin(i*Math.PI/4)*.5;scene.add(rune);
+}
+const portalLight=new THREE.PointLight('#5ce6d0',0,20);portalLight.position.set(0,4.8,-100);scene.add(portalLight);
+
+// Collectible shards are little faceted stars with looping halos.
+const shards=[];
+for(let i=0;i<shardSpots.length;i++){
+  const [x,z]=shardSpots[i],y=terrainHeight(x,z);
+  const group=new THREE.Group();group.position.set(x,y+1.6,z);
+  const crystal=new THREE.Mesh(new THREE.OctahedronGeometry(.8,0),new THREE.MeshStandardMaterial({color:'#f5d77f',emissive:'#c8873c',emissiveIntensity:.72,roughness:.18,metalness:.38}));
+  crystal.scale.set(.72,1.35,.72);crystal.castShadow=true;group.add(crystal);
+  const halo=new THREE.Mesh(new THREE.TorusGeometry(1.05,.035,6,36),new THREE.MeshBasicMaterial({color:'#f4d893',transparent:true,opacity:.76}));halo.rotation.x=Math.PI/2;group.add(halo);
+  const glint=new THREE.PointLight('#f8d783',1.25,8);group.add(glint);
+  scene.add(group);shards.push({group,crystal,halo,baseY:y+1.6,collected:false,phase:i*1.6});
+}
+
+// A little wayfarer, assembled from friendly low-poly shapes.
+const player=new THREE.Group();
+const avatar=new THREE.Group();player.add(avatar);scene.add(player);
+const cloth=mat('#314e48'), cloakMat=mat('#b96847'), skin=mat('#e5b98c'), dark=mat('#473d34'), boots=mat('#614938');
+const torso=new THREE.Mesh(new THREE.CapsuleGeometry(.43,.75,4,8),cloth);torso.position.y=1.38;torso.castShadow=true;avatar.add(torso);
+const coat=new THREE.Mesh(new THREE.ConeGeometry(.68,1.15,7),cloakMat);coat.position.set(0,1.22,.29);coat.rotation.x=Math.PI;coat.castShadow=true;avatar.add(coat);
+const head=new THREE.Mesh(new THREE.SphereGeometry(.34,12,10),skin);head.position.y=2.2;head.castShadow=true;avatar.add(head);
+const hair=new THREE.Mesh(new THREE.SphereGeometry(.36,10,7,0,Math.PI*2,0,Math.PI*.56),dark);hair.position.set(0,2.3,.02);avatar.add(hair);
+const hat=new THREE.Mesh(new THREE.ConeGeometry(.43,.34,7),mat('#d7ba78'));hat.position.y=2.58;hat.castShadow=true;avatar.add(hat);
+const arms=[],legs=[];
+for(const s of [-1,1]){
+  const arm=new THREE.Mesh(new THREE.CapsuleGeometry(.12,.48,3,7),cloth);arm.position.set(s*.53,1.4,0);arm.rotation.z=s*.16;arm.castShadow=true;avatar.add(arm);arms.push(arm);
+  const leg=new THREE.Mesh(new THREE.CapsuleGeometry(.16,.47,3,7),dark);leg.position.set(s*.22,.53,0);leg.castShadow=true;avatar.add(leg);legs.push(leg);
+  const foot=new THREE.Mesh(new THREE.BoxGeometry(.28,.18,.42),boots);foot.position.set(s*.22,.2,-.08);foot.castShadow=true;avatar.add(foot);
+}
+const pack=new THREE.Mesh(new THREE.BoxGeometry(.55,.65,.3),mat('#96764b'));pack.position.set(0,1.52,.46);avatar.add(pack);
+
+// Ambient glimmers drift through the clearings.
+const dustGeo=new THREE.BufferGeometry(),dustPositions=new Float32Array(170*3);
+for(let i=0;i<170;i++){dustPositions[i*3]=(random()-.5)*95;dustPositions[i*3+1]=1+random()*11;dustPositions[i*3+2]=(random()-.5)*95;}
+dustGeo.setAttribute('position',new THREE.BufferAttribute(dustPositions,3));
+const dust=new THREE.Points(dustGeo,new THREE.PointsMaterial({color:'#f4d99b',size:.13,transparent:true,opacity:.68,sizeAttenuation:true}));scene.add(dust);
+
+const keys=new Set();
+let yaw=0,cameraYaw=0,cameraPitch=.23,cameraDistance=7.6,verticalVelocity=0,onGround=true,stamina=1,found=0,started=false,won=false;
+const velocity=new THREE.Vector3(), moveDirection=new THREE.Vector3();
+const intro=document.querySelector('#intro'), toast=document.querySelector('#toast');
+let toastTimer;
+function announce(text){toast.textContent=text;toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove('show'),2300);}
+function startGame(){started=true;intro.classList.add('hidden');}
+document.querySelector('#startButton').addEventListener('click',startGame);
+window.addEventListener('keydown',e=>{keys.add(e.code);if(['Space','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code))e.preventDefault();if(e.code==='Space'&&onGround){verticalVelocity=7.2;onGround=false;}});
+window.addEventListener('keyup',e=>keys.delete(e.code));
+window.addEventListener('blur',()=>keys.clear());
+
+let dragging=false,lastX=0,lastY=0;
+renderer.domElement.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'&&e.button!==0)return;dragging=true;lastX=e.clientX;lastY=e.clientY;renderer.domElement.setPointerCapture(e.pointerId);});
+renderer.domElement.addEventListener('pointermove',e=>{if(!dragging)return;const dx=e.clientX-lastX,dy=e.clientY-lastY;lastX=e.clientX;lastY=e.clientY;cameraYaw-=dx*.004;cameraPitch=THREE.MathUtils.clamp(cameraPitch+dy*.0025,-.05,.72);});
+renderer.domElement.addEventListener('pointerup',()=>dragging=false);
+renderer.domElement.addEventListener('pointercancel',()=>dragging=false);
+renderer.domElement.addEventListener('wheel',e=>{cameraDistance=THREE.MathUtils.clamp(cameraDistance+e.deltaY*.008,4.7,12);},{passive:true});
+
+const stickPad=document.querySelector('#joystick'),stick=document.querySelector('#stick');
+let stickX=0,stickY=0,stickPointer=null;
+function updateStick(e){const r=stickPad.getBoundingClientRect(),dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2),len=Math.hypot(dx,dy),scale=Math.min(1,len/43);stickX=dx/(len||1)*scale;stickY=dy/(len||1)*scale;stick.style.transform=`translate(calc(-50% + ${stickX*34}px),calc(-50% + ${stickY*34}px))`;}
+stickPad.addEventListener('pointerdown',e=>{e.preventDefault();stickPointer=e.pointerId;stickPad.setPointerCapture(e.pointerId);updateStick(e);});
+stickPad.addEventListener('pointermove',e=>{if(e.pointerId===stickPointer)updateStick(e);});
+function resetStick(){stickPointer=null;stickX=stickY=0;stick.style.transform='translate(-50%,-50%)';}
+stickPad.addEventListener('pointerup',resetStick);stickPad.addEventListener('pointercancel',resetStick);
+document.querySelector('#jumpButton').addEventListener('pointerdown',e=>{e.preventDefault();if(onGround){verticalVelocity=7.2;onGround=false;}});
+
+const progressFill=document.querySelector('#progressFill'),progressText=document.querySelector('#progressText');
+const questTitle=document.querySelector('#questTitle'),interact=document.querySelector('#interact');
+interact.addEventListener('click',()=>enterStarwell());
+function enterStarwell(){if(found<5){announce('The Starwell needs all five starshards.');return;}if(won)return;won=true;announce('The Starwell awakens — the valley remembers!');portalLight.intensity=8;portalRing.material.emissiveIntensity=2;portalCore.material.opacity=.6;questTitle.textContent='The valley remembers';interact.classList.remove('show');setTimeout(()=>{
+  intro.querySelector('.eyebrow').textContent='Journey complete';
+  intro.querySelector('h1').innerHTML='THE LIGHT<br>RETURNS';
+  intro.querySelector('p').textContent='You gathered the starshards and woke the ancient Starwell. The forest glows again. Take your time — the wilds are yours to explore.';
+  document.querySelector('#startButton').textContent='Return to the wilds';
+  intro.classList.remove('hidden');
+},900);}
+
+const mapCanvas=document.querySelector('#minimap'),mapCtx=mapCanvas.getContext('2d');
+function drawMap(){
+  const c=mapCtx;c.clearRect(0,0,140,140);c.save();c.beginPath();c.arc(70,70,69,0,Math.PI*2);c.clip();
+  c.fillStyle='#426451';c.fillRect(0,0,140,140);
+  for(let i=0;i<32;i++){const x=(i*67+13)%140,y=(i*43+29)%140;c.fillStyle=i%2?'#58755c':'#4c6a55';c.beginPath();c.arc(x,y,4+(i%4),0,Math.PI*2);c.fill();}
+  const point=(x,z)=>[70+x/250*140,70+z/250*140];
+  c.strokeStyle='#c2ad7b';c.lineWidth=2;c.beginPath();trailSamples.forEach((p,i)=>{const [x,y]=point(p.x,p.z);if(i===0)c.moveTo(x,y);else c.lineTo(x,y);});c.stroke();
+  shards.forEach(s=>{if(s.collected)return;const [x,y]=point(s.group.position.x,s.group.position.z);c.fillStyle='#f8d77f';c.beginPath();c.arc(x,y,2.4,0,Math.PI*2);c.fill();});
+  const [px,py]=point(player.position.x,player.position.z);c.translate(px,py);c.rotate(yaw);c.fillStyle='#fff4c8';c.beginPath();c.moveTo(0,-5);c.lineTo(3.5,4);c.lineTo(0,2);c.lineTo(-3.5,4);c.closePath();c.fill();c.restore();
+}
+
+const clock=new THREE.Clock();
+function animate(){
+  requestAnimationFrame(animate);
+  const dt=Math.min(clock.getDelta(),.035),time=clock.elapsedTime;
+  const forward=(keys.has('KeyW')||keys.has('ArrowUp')?1:0)-(keys.has('KeyS')||keys.has('ArrowDown')?1:0)-stickY;
+  const sideways=(keys.has('KeyD')||keys.has('ArrowRight')?1:0)-(keys.has('KeyA')||keys.has('ArrowLeft')?1:0)+stickX;
+  moveDirection.set(0,0,0);
+  const fwd=new THREE.Vector3(Math.sin(cameraYaw),0,-Math.cos(cameraYaw));
+  const right=new THREE.Vector3(Math.cos(cameraYaw),0,Math.sin(cameraYaw));
+  moveDirection.addScaledVector(fwd,forward).addScaledVector(right,sideways);
+  if(moveDirection.lengthSq()>1)moveDirection.normalize();
+  const sprint=(keys.has('ShiftLeft')||keys.has('ShiftRight'))&&moveDirection.lengthSq()>.1&&stamina>.02;
+  const speed=sprint?8.3:4.7;
+  if(started){
+    player.position.x=THREE.MathUtils.clamp(player.position.x+moveDirection.x*speed*dt,-116,116);
+    player.position.z=THREE.MathUtils.clamp(player.position.z+moveDirection.z*speed*dt,-116,116);
+    const floor=terrainHeight(player.position.x,player.position.z);
+    if(sprint)stamina=Math.max(0,stamina-dt*.17);else stamina=Math.min(1,stamina+dt*.11);
+    if(!onGround){verticalVelocity-=18*dt;player.position.y+=verticalVelocity*dt;if(player.position.y<=floor){player.position.y=floor;verticalVelocity=0;onGround=true;}}
+    else player.position.y=THREE.MathUtils.lerp(player.position.y,floor,Math.min(1,dt*12));
+    if(moveDirection.lengthSq()>.01){yaw=Math.atan2(moveDirection.x,-moveDirection.z);avatar.rotation.y=THREE.MathUtils.lerp(avatar.rotation.y,yaw,Math.min(1,dt*10));}
+  }
+  const moving=moveDirection.lengthSq()>.01&&started;
+  avatar.position.y=moving&&onGround?Math.abs(Math.sin(time*(sprint?13:9)))*.07:0;
+  legs.forEach((leg,i)=>leg.rotation.x=moving?Math.sin(time*(sprint?13:9)+i*Math.PI)*.52:THREE.MathUtils.lerp(leg.rotation.x,0,dt*8));
+  arms.forEach((arm,i)=>arm.rotation.x=moving?Math.sin(time*(sprint?13:9)+Math.PI+i*Math.PI)*.42:THREE.MathUtils.lerp(arm.rotation.x,0,dt*8));
+  shards.forEach(s=>{if(s.collected)return;s.group.position.y=s.baseY+Math.sin(time*1.65+s.phase)*.22;s.group.rotation.y=time*.55+s.phase;s.halo.rotation.z=time*.8+s.phase;
+    if(started&&player.position.distanceTo(s.group.position)<2.15){s.collected=true;scene.remove(s.group);found++;progressText.textContent=`${found} / 5`;progressFill.style.width=`${found*20}%`;announce(['A starshard hums in your palm','A second light joins your path','The wilds answer your call','Only one shard remains','All five starshards are yours'][found-1]);if(found===5){questTitle.textContent='Return to the Starwell';portalRing.material.emissiveIntensity=.9;portalCore.material.opacity=.24;portalLight.intensity=2.5;}}
+  });
+  const portalDistance=Math.hypot(player.position.x,player.position.z+103);
+  interact.classList.toggle('show',started&&portalDistance<8);
+  if(started&&found===5&&portalDistance<4.2)enterStarwell();
+  portalRing.rotation.z=Math.sin(time*.6)*.025;
+  portalCore.material.opacity=won?.55:(found===5?.18:.045);
+  portalLight.intensity=won?7:(found===5?2.1:0);
+  portalRing.material.emissiveIntensity=won?2:(found===5?.7:0);
+  const desired=new THREE.Vector3(
+    player.position.x+Math.sin(cameraYaw)*cameraDistance*Math.cos(cameraPitch),
+    player.position.y+2.6+cameraDistance*Math.sin(cameraPitch),
+    player.position.z+Math.cos(cameraYaw)*cameraDistance*Math.cos(cameraPitch)
+  );
+  camera.position.lerp(desired,Math.min(1,dt*5.2));
+  camera.lookAt(player.position.x,player.position.y+1.35,player.position.z);
+  document.querySelector('#staminaFill').style.width=`${Math.round(stamina*100)}%`;
+  if(Math.floor(time*8)%2===0)drawMap();
+  renderer.render(scene,camera);
+}
+function resize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setPixelRatio(Math.min(devicePixelRatio,1.8));renderer.setSize(innerWidth,innerHeight);}
+window.addEventListener('resize',resize);
+player.position.set(0,terrainHeight(0,9),9);
+camera.position.set(0,5,17);camera.lookAt(0,1.3,9);
+drawMap();animate();
+
+const sunBall = new THREE.Mesh(new THREE.SphereGeometry(3.2, 20, 16), new THREE.MeshBasicMaterial({ color: '#ffe6ad' }));
+sunBall.position.set(-70, 72, -130); scene.add(sunBall);
+const cloudMat = new THREE.MeshBasicMaterial({ color: '#f1f0d7', transparent: true, opacity: .43, depthWrite: false });
+for (let i = 0; i < 11; i++) {
+  const cloud = new THREE.Group();
+  for (let j = 0; j < 5; j++) {
+    const puff = new THREE.Mesh(new THREE.SphereGeometry(1, 10, 7), cloudMat);
+    puff.scale.set(4 + Math.sin(i * 4 + j) * 1.5, .65 + (j % 2) * .2, 1.4);
+    puff.position.set(j * 3.5 - 7, Math.sin(j * 1.7) * .7, Math.cos(j) * .7);
+    cloud.add(puff);
+  }
+  cloud.position.set(-115 + (i * 47) % 220, 32 + (i * 13) % 16, -100 + (i * 61) % 200);
+  scene.add(cloud);
+}
+
+</script>
+</body>
+</html>
